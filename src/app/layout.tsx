@@ -12,11 +12,7 @@ export const metadata = {
 };
 
 async function getSession(cookie: string): Promise<Session> {
-  console.log(
-    `${
-      process.env.VERCEL_URL ? process.env.VERCEL_URL : process.env.NEXTAUTH_URL
-    }/api/auth/session`
-  );
+  console.log(`${process.env.NEXTAUTH_URL}/api/auth/session`);
   const response = await fetch(
     `${
       process.env.VERCEL_URL ? process.env.VERCEL_URL : process.env.NEXTAUTH_URL
