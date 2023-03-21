@@ -4,6 +4,7 @@ import AuthContext from "./AuthContext";
 import { headers } from "next/headers";
 import { Session } from "next-auth";
 // import { getSession } from "next-auth/react";
+// import { getSession } from "next-auth/react";
 
 export const metadata = {
   title: "My App",
@@ -13,9 +14,7 @@ export const metadata = {
 async function getSession(cookie: string): Promise<Session> {
   const response = await fetch(
     `${
-      process.env.VERCEL_ENV === "production"
-        ? process.env.VERCEL_URL
-        : process.env.NEXTAUTH_URL
+      process.env.VERCEL_URL ? process.env.VERCEL_URL : process.env.NEXTAUTH_URL
     }/api/auth/session`,
     {
       headers: {
@@ -25,6 +24,7 @@ async function getSession(cookie: string): Promise<Session> {
   );
 
   const session = await response.json();
+  console.log(session);
 
   return Object.keys(session).length > 0 ? session : null;
 }
