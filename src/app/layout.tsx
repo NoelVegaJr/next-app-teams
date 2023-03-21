@@ -2,7 +2,8 @@ import "./globals.css";
 import Link from "next/link";
 import AuthContext from "./AuthContext";
 import { headers } from "next/headers";
-import { Session } from "next-auth";
+import { getServerSession, Session } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 // import { getSession } from "next-auth/react";
 // import { getSession } from "next-auth/react";
 
@@ -35,7 +36,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getSession(headers().get("cookie") ?? "");
+  // const session = await getSession(headers().get("cookie") ?? "");
+  const session = await getServerSession(authOptions);
 
   return (
     <html lang="en">
@@ -49,7 +51,7 @@ export default async function RootLayout({
         </nav>
 
         <div className="flex-1 ">
-          <AuthContext session={session}>{children}</AuthContext>
+          <AuthContext session={session!}>{children}</AuthContext>
         </div>
       </body>
     </html>
