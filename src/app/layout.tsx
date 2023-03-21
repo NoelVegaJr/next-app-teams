@@ -26,7 +26,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  console.log("COOKIE: ", headers().get("cookie"));
   const session = await getSession(headers().get("cookie") ?? "");
 
   return (
