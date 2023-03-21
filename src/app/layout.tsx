@@ -3,6 +3,7 @@ import Link from "next/link";
 import AuthContext from "./AuthContext";
 import { headers } from "next/headers";
 import { Session } from "next-auth";
+// import { getSession } from "next-auth/react";
 
 export const metadata = {
   title: "My App",
@@ -10,11 +11,18 @@ export const metadata = {
 };
 
 async function getSession(cookie: string): Promise<Session> {
-  const response = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/session`, {
-    headers: {
-      cookie,
-    },
-  });
+  const response = await fetch(
+    `${
+      process.env.VERCEL_ENV === "production"
+        ? process.env.VERCEL_URL
+        : process.env.NEXTAUTH_URL
+    }/api/auth/session`,
+    {
+      headers: {
+        cookie,
+      },
+    }
+  );
 
   const session = await response.json();
 
@@ -26,8 +34,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const session = await getSession(headers().get("cookie") ?? "");
-  const session = await getSession("");
+  const session = await getSession(headers().get("cookie") ?? "");
 
   return (
     <html lang="en">
