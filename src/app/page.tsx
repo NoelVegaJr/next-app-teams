@@ -1,11 +1,12 @@
-import { Inter } from "next/font/google";
+import BaseNavigation from "@/components/BaseNavigation";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export default function Home() {
+export default async function Home() {
   return (
-    <main>
-      <p>Home</p>
-    </main>
+    <>
+      <BaseNavigation />
+      <main>
+        <p>Home</p>
+      </main>
+    </>
   );
 }

@@ -42,6 +42,14 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    profile       Profile?
+}
+
+model Profile {
+    id       String @id @default(cuid())
+    userId   String @unique
+    username String @unique
+    user     User   @relation(fields: [userId], references: [id])
 }
 
 model VerificationToken {
